@@ -20,5 +20,6 @@ export default function execScript(scriptName, { args = [], cliArgs = {} }) {
         });
 
         execProcess.stdout.pipe(process.stdout);
+        execProcess.stderr.pipe(process.stderr);
     })
 }
