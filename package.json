@@ -4,6 +4,9 @@
   "description": "Advanced npm package script runner",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "psrn": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test1": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +18,7 @@
   "author": "Chris Stead",
   "license": "ISC",
   "dependencies": {
-    "@inquirer/prompts": "^7.2.1"
+    "@inquirer/prompts": "^7.2.1",
+    "command-line-args": "^6.0.1"
   }
 }
