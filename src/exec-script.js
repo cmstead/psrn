@@ -1,4 +1,4 @@
-import { exec } from 'child_process';
+import { spawn } from 'child_process';
 
 export default function execScript(scriptName, { args = [], cliArgs = {} }) {
     return new Promise(function (resolve, reject) {
@@ -11,15 +11,16 @@ export default function execScript(scriptName, { args = [], cliArgs = {} }) {
 
         const command = `${runner} ${scriptName} ${finalArgs.join(' ')}`;
 
-        const execProcess = exec(command, function (error) {
-            if (error) {
-                reject(error.message);
+        const [scriptName, ...args] = command.split(' ');
+
+        const spawnProcess = spawn(scriptName, args, { stdio: 'inherit' });
+
+        spawnProcess.on('exit', function (code) {
+            if (code === 0) {
+                resolve(true);
+            } else {
+                reject(new Error(`Script exited with code ${code}`));
             }
-
-            resolve(true);
         });
-
-        execProcess.stdout.pipe(process.stdout);
-        execProcess.stderr.pipe(process.stderr);
     })
 }
