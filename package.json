@@ -1,6 +1,6 @@
 {
   "name": "psrn",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Advanced npm package script runner",
   "main": "index.js",
   "type": "module",
