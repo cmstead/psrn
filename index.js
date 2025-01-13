@@ -3,7 +3,7 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { getCommandLineArgs } from "./src/command-line-service.js";
-import { readScriptLines } from "./src/script-utils.js";
+import { readScriptLines, readScriptNames } from "./src/script-utils.js";
 import selectScript from "./src/select-script.js";
 import { prepareAndExecScript } from "./src/exec-script-service.js";
 import showHelp from './src/help.js';
@@ -31,8 +31,18 @@ function errorAndExit(error) {
 
     process.exit(1);
 }
+function eitherAsync({ predicate, onPass, onFail }) {
+    return predicate()
+        .then((result) => result ? onPass() : onFail());
+}
 
-function runMain(cliArgs) {
+function isPromptedScriptRun(cliArgs) {
+    const isUnprompted = Object.keys(cliArgs).length === 1 && !!cliArgs._unknown;
+
+    return Promise.resolve(!isUnprompted);
+}
+
+function runPrompted(cliArgs) {
     console.log('Package script runner');
 
     return readScriptLines()
@@ -40,7 +50,23 @@ function runMain(cliArgs) {
         .then((scriptName) => prepareAndExecScript(scriptName, cliArgs))
         .then(() => process.exit(0))
         .catch(errorAndExit);
+}
 
+function runUnprompted(cliArgs) {
+    const scriptName = cliArgs._unknown.shift();
+    const newCliArgs = getCommandLineArgs(cliArgs._unknown);
+
+    prepareAndExecScript(scriptName, newCliArgs)
+        .then(() => process.exit(0))
+        .catch(errorAndExit);
+}
+
+function runMain(cliArgs) {
+    return eitherAsync({
+        predicate: () => isPromptedScriptRun(cliArgs),
+        onPass: () => runPrompted(cliArgs),
+        onFail: () => runUnprompted(cliArgs)
+    });
 }
 
 function showVersion() {
