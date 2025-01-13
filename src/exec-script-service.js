@@ -15,5 +15,5 @@ function getAdditionalArguments({ arguments: cliArguments, _unknown }) {
 
 export function prepareAndExecScript(scriptName, cliArgs) {
     return getAdditionalArguments(cliArgs)
-        .then((args) => execScript(scriptName, { args }));
+        .then((args) => execScript(scriptName, { args, cliArgs }));
 }

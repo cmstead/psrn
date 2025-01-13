@@ -22,6 +22,12 @@ const cliArgsOptions = [
         type: Boolean,
         description: 'Show version number'
     },
+    {
+        name: 'yarn',
+        alias: 'y',
+        type: Boolean,
+        description: 'Use yarn to run commands'
+    },
 ];
 
 export default cliArgsOptions;
