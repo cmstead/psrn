@@ -1,5 +1,5 @@
 {
-  "name": "psrun",
+  "name": "psrn",
   "version": "1.1.0",
   "description": "Advanced npm package script runner",
   "main": "index.js",
