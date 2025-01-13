@@ -11,6 +11,8 @@ export default function execScript(scriptName, { args = [], cliArgs = {} }) {
 
         const command = `${runner} ${scriptName} ${finalArgs.join(' ')}`;
 
+        console.log(`Executing script: ${command}`);
+
         const [commandName, ...commandArgs] = command.split(' ');
 
         const spawnProcess = spawn(commandName, commandArgs, { stdio: 'inherit' });
