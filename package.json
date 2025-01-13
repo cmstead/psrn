@@ -1,0 +1,20 @@
+{
+  "name": "psrun",
+  "version": "1.0.0",
+  "description": "Advanced npm package script runner",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test1": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "script",
+    "runner"
+  ],
+  "author": "Chris Stead",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.1"
+  }
+}
