@@ -7,7 +7,9 @@ import { tap } from './utils.js';
 const accessAsync = promisify(access);
 const readFileAsync = promisify(readFile);
 
-const getPackageFilePath = () => path.join(process.cwd(), 'package.json');
+const getPackageFilePath = (dirname) => {
+    return path.join(dirname, 'package.json')
+};
 
 function verifyExistingPackageFile(filePath) {
     return new Promise(function (resolve, reject) {
@@ -19,8 +21,8 @@ function verifyExistingPackageFile(filePath) {
     });
 }
 
-export function readPackageJson() {
-    return Promise.resolve(getPackageFilePath())
+export function readPackageJson(dirname = process.cwd()) {
+    return Promise.resolve(getPackageFilePath(dirname))
         .then(tap(verifyExistingPackageFile))
         .then((filePath) => readFileAsync(filePath, 'utf8'))
         .then(JSON.parse);
