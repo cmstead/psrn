@@ -1,8 +1,10 @@
 import { exec } from 'child_process';
 
-export default function execScript(scriptName) {
+export default function execScript(scriptName, { args = []}) {
     return new Promise(function (resolve,reject) {
-        const execProcess = exec(`npm run ${scriptName}`, function (error) {
+        const command = `npm run ${scriptName} ${args.join(' ')}`;
+
+        const execProcess = exec(command, function (error) {
             if (error) {
                 reject(error.message);
             }

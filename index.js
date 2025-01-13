@@ -3,7 +3,7 @@
 import { getCommandLineArgs } from "./src/command-line-service.js";
 import { readScriptLines } from "./src/script-utils.js";
 import selectScript from "./src/select-script.js";
-import execScript from "./src/exec-script.js";
+import { prepareAndExecScript } from "./src/exec-script-service.js";
 
 const inquirerForceQuitError = 'User force closed the prompt';
 
@@ -24,7 +24,7 @@ function main() {
 
     readScriptLines()
         .then((scriptLines) => selectScript(scriptLines, { long: cliArgs.long }))
-        .then((scriptName) => execScript(scriptName))
+        .then((scriptName) => prepareAndExecScript(scriptName, cliArgs))
         .then(() => process.exit(0))
         .catch(errorAndExit);
 }
