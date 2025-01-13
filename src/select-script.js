@@ -1,7 +1,7 @@
 import { select } from '@inquirer/prompts';
 
 function readScriptName(selection) {
-    return selection.split(':')[0].trim()
+    return selection.split(' : ')[0].trim()
 }
 
 export default function selectScript (scriptLines, { long }) {
