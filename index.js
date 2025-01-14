@@ -3,15 +3,27 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { getCommandLineArgs } from "./src/command-line-service.js";
-import { readScriptLines, readScriptNames } from "./src/script-utils.js";
+import { readPackageName, readScriptLines } from "./src/package-utils.js";
 import selectScript from "./src/select-script.js";
 import { prepareAndExecScript } from "./src/exec-script-service.js";
 import showHelp from './src/help.js';
 import { readPackageJson } from './src/packagefs.js';
+import initStore from './src/store.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const store = initStore(__dirname);
+
 const inquirerForceQuitError = 'User force closed the prompt';
+
+function storeAndExecute(scriptName, cliArgs) {
+    return readPackageName()
+        .then((packageName) => {
+            console.log(packageName, scriptName);
+            return store.set(packageName, scriptName)
+        })
+        .then(() => prepareAndExecScript(scriptName, cliArgs));
+}
 
 function isPrintableError(error) {
     const errorLine1 = error.toString().split('\n')[0];
@@ -46,8 +58,8 @@ function runPrompted(cliArgs) {
     console.log('Package script runner');
 
     return readScriptLines()
-        .then((scriptLines) => selectScript(scriptLines, { long: cliArgs.long }))
-        .then((scriptName) => prepareAndExecScript(scriptName, cliArgs))
+        .then((scriptLines) => selectScript(scriptLines, { long: cliArgs.long, store }))
+        .then((scriptName) => storeAndExecute(scriptName, cliArgs))
         .then(() => process.exit(0))
         .catch(errorAndExit);
 }
@@ -56,7 +68,7 @@ function runUnprompted(cliArgs) {
     const scriptName = cliArgs._unknown.shift();
     const newCliArgs = getCommandLineArgs(cliArgs._unknown);
 
-    prepareAndExecScript(scriptName, newCliArgs)
+    storeAndExecute(scriptName, newCliArgs)
         .then(() => process.exit(0))
         .catch(errorAndExit);
 }
