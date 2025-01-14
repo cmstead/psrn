@@ -23,9 +23,7 @@
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",
     "command-line-args": "^6.0.1",
-    "command-line-usage": "^7.0.3"
-  },
-  "devDependencies": {
+    "command-line-usage": "^7.0.3",
     "node-persist": "^4.0.3"
   }
 }
