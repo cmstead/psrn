@@ -1,17 +1,16 @@
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
 export const tap = (fn) => (value) => {
     fn(value);
     return value;
 }
 
-export function promiseEither(fn) {
-    return new Promise(function (resolve, reject){
-        fn()
-        .then(function (result) {
-            if(result instanceof Error){
-                reject(result.message);
-            } else {
-                resolve(result);
-            }
-        });
-    });
+export function eitherAsync({ predicate, onPass, onFail }) {
+    return predicate()
+        .then((result) => result ? onPass() : onFail());
+}
+
+export function getDirname(url) {
+    return dirname(fileURLToPath(url));
 }

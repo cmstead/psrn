@@ -1,6 +1,8 @@
 import execScript from "./exec-script.js";
 
 import { input } from '@inquirer/prompts';
+import { getStore } from "./store.js";
+import { readPackageName } from "./package-utils.js";
 
 const argumentsPrompt = {
     message: 'Enter additional arguments (separated by space):'
@@ -13,7 +15,18 @@ function getAdditionalArguments({ arguments: cliArguments, _unknown }) {
         : Promise.resolve(_unknown)
 }
 
-export function prepareAndExecScript(scriptName, cliArgs) {
+function prepareAndExecScript(scriptName, cliArgs) {
     return getAdditionalArguments(cliArgs)
         .then((args) => execScript(scriptName, { args, cliArgs }));
+}
+
+export function storeAndExecute(scriptName, cliArgs) {
+    const store = getStore();
+
+    return readPackageName()
+        .then((packageName) => {
+            console.log(packageName, scriptName);
+            return store.set(packageName, scriptName)
+        })
+        .then(() => prepareAndExecScript(scriptName, cliArgs));
 }

@@ -1,11 +1,15 @@
 import { select } from '@inquirer/prompts';
 import { readPackageName } from './package-utils.js';
+import { getStore } from './store.js';
+
 
 function readScriptName(selection) {
     return selection.split(' : ')[0].trim()
 }
 
-export default function selectScript(scriptLines, { long, store }) {
+export default function selectScript(scriptLines, { long }) {
+    const store = getStore();
+
     return readPackageName()
         .then((packageName) => store.get(packageName))
         .then((scriptName) => select({

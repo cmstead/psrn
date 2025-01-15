@@ -1,7 +1,9 @@
 import path from 'path';
 import storage from 'node-persist';
 
-export default function initStore(dirname) {
+let store = null;
+
+export function initStore(dirname) {
     storage.initSync({
         dir: path.join(dirname, '.node-persist', 'storage')
     });
@@ -15,9 +17,15 @@ export default function initStore(dirname) {
         return storage.getItem(key);
     }
 
-    return {
+    store = {
         get,
         set
     };
+
+    return store;
+}
+
+export function getStore() {
+    return store;
 }
 
