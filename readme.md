@@ -30,6 +30,7 @@ You'll get a helpful interface and all the scripts will be at your fingertips.
 - `--arguments` or `-a` : Have psrn prompt you for additional arguments to pass through
 - `--help` or `-h` : Display help information
 - `--long` or `-l` : By default psrn just shows the script names. This displays everything
+- `--set-runner` : Set default script runner (npm or yarn)
 - `--version` : Print current psrn version
 - `--yarn` or `-y` : Use yarn as the script runner
 - `-- ` : Type `--` followed by a space and then start typing arguments. They'll pass through directly

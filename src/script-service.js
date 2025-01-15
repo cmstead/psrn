@@ -6,7 +6,7 @@ import { errorAndExit } from './error.js';
 import { getCommandLineArgs } from './command-line-service.js';
 
 function isPromptedScriptRun(cliArgs) {
-    const isUnprompted = Object.keys(cliArgs).length === 1 && !!cliArgs._unknown;
+    const isUnprompted = Object.keys(cliArgs).length === 1 && !!cliArgs._unknown && cliArgs._unknown[0] !== '--';
 
     return Promise.resolve(!isUnprompted);
 }

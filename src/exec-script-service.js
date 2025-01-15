@@ -25,7 +25,6 @@ export function storeAndExecute(scriptName, cliArgs) {
 
     return readPackageName()
         .then((packageName) => {
-            console.log(packageName, scriptName);
             return store.set(packageName, scriptName)
         })
         .then(() => prepareAndExecScript(scriptName, cliArgs));

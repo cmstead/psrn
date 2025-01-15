@@ -6,6 +6,7 @@ import getInfoFunctions from './src/info.js';
 import { initStore } from './src/store.js';
 import { errorAndExit } from './src/error.js';
 import { runScript } from './src/script-service.js';
+import setRunner from "./src/config-service.js";
 
 const __dirname = getDirname(import.meta.url);
 const { showHelp, showVersion } = getInfoFunctions(__dirname);
@@ -19,7 +20,9 @@ function main() {
         return showHelp();
     } else if (cliArgs.version) {
         return showVersion();
-    } else {
+    } else if(cliArgs['set-runner']) {
+        return setRunner();
+    }else {
         return runScript(cliArgs);
     }
 

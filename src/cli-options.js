@@ -18,6 +18,17 @@ const cliArgsOptions = [
         description: 'Display select list with long script info'
     },
     {
+        name: 'npm',
+        alias: 'n',
+        type: Boolean,
+        description: 'Use npm to run commands'
+    },
+    {
+        name: 'set-runner',
+        type: Boolean,
+        description: 'Set default script runner (npm or yarn)'
+    },
+    {
         name: 'version',
         type: Boolean,
         description: 'Show version number'

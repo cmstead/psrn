@@ -9,7 +9,6 @@ export function initStore(dirname) {
     });
 
     function set(key, value) {
-        console.log('setting', key, value);
         return storage.setItem(key, value);
     }
 
