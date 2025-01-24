@@ -3,16 +3,31 @@ import execScript from "./exec-script.js";
 import { input } from '@inquirer/prompts';
 import { getStore } from "./store.js";
 import { readPackageName } from "./package-utils.js";
+import { tap } from "./utils.js";
 
-const argumentsPrompt = {
-    message: 'Enter additional arguments (separated by space):'
-};
+function getArgumentsPrompt() {
+    const store = getStore();
+    const argumentsPrompt = {
+        message: 'Enter additional arguments (space clears default arguments):'
+    };
+
+    return store.get("last-arguments")
+        .then((lastArguments) => lastArguments ? { ...argumentsPrompt, default: lastArguments } : argumentsPrompt);
+}
 
 function getAdditionalArguments({ arguments: cliArguments, _unknown }) {
-    return cliArguments
-        ? input(argumentsPrompt)
-            .then((args) => ['--', args])
-        : Promise.resolve(_unknown)
+    const store = getStore();
+
+    return store.get("arguments-prompt")
+        .then((promptForArguments) => {
+            return cliArguments || promptForArguments === 'true'
+                ? getArgumentsPrompt()
+                    .then((argumentsPrompt) => input(argumentsPrompt))
+                    .then(tap((args) => store.set("last-arguments", args.trim())))
+                    .then((args) => ['--', args.trim()])
+                : Promise.resolve(_unknown);
+        })
+        .catch(() => Promise.resolve(_unknown));
 }
 
 function prepareAndExecScript(scriptName, cliArgs) {

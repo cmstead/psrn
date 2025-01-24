@@ -1,7 +1,7 @@
 import { getStore } from "./store.js";
 import { select } from '@inquirer/prompts';
 
-export default function setRunner() {
+export function setRunner() {
     const store = getStore();
 
     return store.get('runner')
@@ -15,5 +15,22 @@ export default function setRunner() {
         }))
         .then((selection) => {
             store.set('runner', selection);
+        });
+}
+
+export function setArguments() {
+    const store = getStore();
+
+    return store.get('arguments-prompt')
+        .then((argumentsPrompt) => select({
+            message: 'Request arguments for all script runs',
+            default: argumentsPrompt,
+            choices: [
+                'true',
+                'false'
+            ]
+        }))
+        .then((selection) => {
+            store.set('arguments-prompt', selection);
         });
 }

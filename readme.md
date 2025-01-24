@@ -34,3 +34,7 @@ You'll get a helpful interface and all the scripts will be at your fingertips.
 - `--version` : Print current psrn version
 - `--yarn` or `-y` : Use yarn as the script runner
 - `-- ` : Type `--` followed by a space and then start typing arguments. They'll pass through directly
+
+## Todo
+
+- [ ] Clean up the sheer number of magic strings

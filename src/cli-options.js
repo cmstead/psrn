@@ -29,6 +29,11 @@ const cliArgsOptions = [
         description: 'Set default script runner (npm or yarn)'
     },
     {
+        name: 'set-arguments-prompt',
+        type: Boolean,
+        description: 'Default to requesting arguments for all script runs'
+    },
+    {
         name: 'version',
         type: Boolean,
         description: 'Show version number'
