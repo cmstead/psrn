@@ -1,7 +1,7 @@
 import commandLineUsage from 'command-line-usage';
 
 import helpData from './cli-help-data.js';
-import { readPackageJson } from './packagefs.js';
+import readPackageJson from './packagefs.js';
 import { errorAndExit } from './error.js';
 
 export default function getInfoFunctions(__dirname) {

@@ -13,30 +13,23 @@ const { showHelp, showVersion } = getInfoFunctions(__dirname);
 
 initStore(__dirname);
 
-const commands = {
-    help: showHelp,
-    version: showVersion,
-    "set-runner": setRunner,
-    "set-arguments-prompt": setArguments,
-};
-
-const findCommandName = (cliArgs) =>
-    Object.keys(commands)
-        .find(key => cliArgs?.[key]);
-
 function main() {
-    try {
-        const cliArgs = getCommandLineArgs();
-        const commandName = findCommandName(cliArgs);
+    const cliArgs = getCommandLineArgs();
 
-        return commandName ? commands[commandName]() : runScript(cliArgs);
-    } catch (error) {
-        errorAndExit(error);
-        process.exit(1);
+    if (cliArgs.help) {
+        return showHelp();
+    } else if (cliArgs.version) {
+        return showVersion();
+    } else if(cliArgs['set-runner']) {
+        return setRunner();
+    } else if(cliArgs['set-arguments-prompt']) {
+        return setArguments();
+    }else {
+        return runScript(cliArgs);
     }
+
 }
 
-process.on('unhandledRejection', errorAndExit);
-process.on('uncaughtException', errorAndExit);
+process.on('unhandledRejection', errorAndExit)
 
-main();
+main()
