@@ -47,9 +47,11 @@ function safelyParseJson(jsonString) {
 
 const readJsonFile = (filePath) => readFile(filePath, 'utf8');
 
+/** @typedef {{ scripts: []? }} PackageObject */
+
 /**
  * @param {string} dirname 
- * @returns {Promise<any>}
+ * @returns {Promise<PackageObject>}
  * @throws {Error} If the file does not exist or is not readable
  */
 const readPackageJson = (dirname) => {
