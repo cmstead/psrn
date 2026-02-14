@@ -1,5 +1,6 @@
 import { join as pathJoin } from 'path';
 import { access, constants, readFile } from 'fs/promises'
+import { check } from './types';
 
 const errorMessages = [
     {
@@ -17,7 +18,7 @@ const errorMessages = [
 ];
 
 const getPackageFilePath = (dirname) => {
-    const isValidDirname = typeof dirname === 'string' && dirname.trim() !== '';
+    const isValidDirname = check.isString(dirname) && dirname.trim() !== '';
     const safeDirName = isValidDirname ? dirname : process.cwd();
 
     return pathJoin(safeDirName, 'package.json')

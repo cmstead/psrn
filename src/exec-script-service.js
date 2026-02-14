@@ -12,7 +12,16 @@ function getArgumentsPrompt() {
     };
 
     return store.get("last-arguments")
-        .then((lastArguments) => lastArguments ? { ...argumentsPrompt, default: lastArguments } : argumentsPrompt);
+        .then((lastArguments) => {
+            if (!lastArguments) {
+                return argumentsPrompt;
+            }
+            return { ...argumentsPrompt, default: lastArguments };
+        })
+        .catch((err) => {
+            console.error("Error retrieving last arguments:", err);
+            return argumentsPrompt;
+        });
 }
 
 function getAdditionalArguments({ arguments: cliArguments, _unknown }) {
@@ -35,12 +44,20 @@ function prepareAndExecScript(scriptName, cliArgs) {
         .then((args) => execScript(scriptName, { args, cliArgs }));
 }
 
+/**
+ * Stores the script name in the store and executes the script with the provided CLI arguments.
+ *
+ * @param {string} scriptName - The name of the script to store and execute.
+ * @param {Object} cliArgs - The command-line arguments to pass to the script.
+ * @returns {Promise<void>} A promise that resolves when the script is stored and executed.
+ */
 export function storeAndExecute(scriptName, cliArgs) {
     const store = getStore();
 
     return readPackageName()
-        .then((packageName) => {
-            return store.set(packageName, scriptName)
+        .then((packageName) => store.set(packageName, scriptName))
+        .catch((err) => {
+            console.error("Error storing script name:", err);
         })
         .then(() => prepareAndExecScript(scriptName, cliArgs));
 }

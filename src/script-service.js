@@ -30,6 +30,16 @@ function runUnprompted(cliArgs) {
         .catch(errorAndExit);
 }
 
+/**
+ * Executes a script based on the provided command-line arguments.
+ *
+ * Depending on whether the script requires user input, it will either
+ * run in prompted mode or unprompted mode.
+ *
+ * @param {Object} cliArgs - The command-line arguments for the script.
+ * @returns {Promise<void>} A promise that resolves when the script execution
+ * is complete.
+ */
 export function runScript(cliArgs) {
     return eitherAsync({
         predicate: () => isPromptedScriptRun(cliArgs),

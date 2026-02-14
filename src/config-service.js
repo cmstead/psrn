@@ -1,6 +1,11 @@
 import { getStore } from "./store.js";
 import { select } from '@inquirer/prompts';
 
+/**
+ * Prompts the user to select a runner (e.g., npm or yarn) and saves the selection in the store.
+ *
+ * @returns {Promise<void>} A promise that resolves when the runner is set in the store.
+ */
 export function setRunner() {
     const store = getStore();
 
@@ -18,6 +23,12 @@ export function setRunner() {
         });
 }
 
+/**
+ * Prompts the user to set whether arguments should be requested for all script runs
+ * and saves the selection in the store.
+ *
+ * @returns {Promise<void>} A promise that resolves when the arguments-prompt setting is updated in the store.
+ */
 export function setArguments() {
     const store = getStore();
 

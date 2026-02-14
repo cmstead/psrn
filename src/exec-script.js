@@ -39,6 +39,13 @@ function spawnScript(scriptName, { args = [], cliArgs = {}, runner }) {
     })
 }
 
+/**
+ * Executes a script using the specified runner and arguments.
+ *
+ * @param {string} scriptName - The name of the script to execute.
+ * @param {Object} options - Options for the script execution.
+ * @returns {Promise<void>} A promise that resolves when the script execution is complete.
+ */
 export default function execScript(scriptName, { args = [], cliArgs = {} }) {
     const store = getStore();
 

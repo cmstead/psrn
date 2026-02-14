@@ -1,12 +1,13 @@
 import readPackageJson from './packagefs.js';
+import { check } from './types.js';
 
 function handleNoScriptsError() {
     throw new Error('No scripts found in package.json or scripts object is empty.');
 }
 
-const isValidScriptObject = (scripts) => typeof scripts === 'object'
+const isValidScriptObject = (scripts) => check.isObject(scripts)
     && Object.keys(scripts).length > 0
-    && Object.values(scripts).every((script) => typeof script === 'string');
+    && Object.values(scripts).every((script) => check.isString(script));
 
 function validateScripts(scripts) {
     if (!scripts || !isValidScriptObject(scripts)) {
