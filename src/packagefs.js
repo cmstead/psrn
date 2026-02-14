@@ -1,6 +1,6 @@
 import { join as pathJoin } from 'path';
 import { access, constants, readFile } from 'fs/promises'
-import { check } from './types';
+import { check } from './types.js';
 
 const errorMessages = [
     {
