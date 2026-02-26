@@ -55,7 +55,7 @@ const readJsonFile = (filePath) => readFile(filePath, 'utf8');
  * @returns {Promise<PackageObject>}
  * @throws {Error} If the file does not exist or is not readable
  */
-const readPackageJson = (dirname) => {
+export default function readPackageJson(dirname) {
     const filePath = getPackageFilePath(dirname);
 
     return verifyExistingPackageFile(filePath)
@@ -65,5 +65,3 @@ const readPackageJson = (dirname) => {
             throw new Error(getErrorMessage(error, filePath));
         })
 };
-
-export default readPackageJson;
