@@ -7,7 +7,13 @@ const cliHelpData = [
     },
     {
         header: 'Usage',
-        content: `psrn [-l] [-a] [--] [args]`
+        content: `
+        psrn [-l] [-n|y] [--] [args]
+        psrn [-l] [-n|y] [-a]
+        psrn [--set-runner]
+        psrn [--set-arguments-prompt]
+        psrn []
+        `
     },
     {
         header: 'CLI Options',
