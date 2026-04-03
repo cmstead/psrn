@@ -1,6 +1,6 @@
 {
   "name": "psrn",
-  "version": "1.15.1",
+  "version": "1.15.2",
   "description": "Advanced npm package script runner - make package script suck less",
   "main": "index.js",
   "type": "module",
